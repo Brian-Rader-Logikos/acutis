@@ -6,6 +6,9 @@
 out/
 build/
 
+# JetBrains Folders
+.idea/
+
 # Prerequisites
 *.d
 
