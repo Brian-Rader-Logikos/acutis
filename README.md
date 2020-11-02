@@ -1,31 +1,25 @@
-# cpp_starter_project
-
 [![codecov](https://codecov.io/gh/lefticus/cpp_starter_project/branch/master/graph/badge.svg)](https://codecov.io/gh/lefticus/cpp_starter_project)
 
 [![Build Status](https://travis-ci.org/lefticus/cpp_starter_project.svg?branch=master)](https://travis-ci.org/lefticus/cpp_starter_project)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/ro4lbfoa7n0sy74c/branch/master?svg=true)](https://ci.appveyor.com/project/lefticus/cpp-starter-project/branch/master)
+Master Branch Status:
+[![Build status](https://ci.appveyor.com/api/projects/status/6cy26jcdw4fbohar?svg=true)](https://ci.appveyor.com/project/Brian-Rader-Logikos/acutis)
 
-![CMake](https://github.com/lefticus/cpp_starter_project/workflows/CMake/badge.svg)
 
+
+
+| Tool		| Master Status  |
+| --------- | :------: |
+| Travis-CI | [![Build Status](https://travis-ci.org/Brian-Rader-Logikos/acutis.svg?branch=master)](https://travis-ci.org/Brian-Rader-Logikos/acutis) |
+| AppVeyor  | [![Build status](https://ci.appveyor.com/api/projects/status/6cy26jcdw4fbohar?svg=true)](https://ci.appveyor.com/project/Brian-Rader-Logikos/acutis) |
+| CMake     | ![CMake](https://github.com/Brian-Rader-Logikos/acutis/workflows/CMake/badge.svg?branch=master) |
+| CodeCov   | [![codecov](https://codecov.io/gh/Brian-Rader-Logikos/acutis/branch/master/graph/badge.svg)](https://codecov.io/gh/Brian-Rader-Logikos/acutis) |
+
+# Acutis Server
+
+Acutis Server is  an HTTP server library built on the latest C++ and using C++ Best Practices.
 
 ## Getting Started
-
-### Use the Github template
-First, click the green `Use this template` button near the top of this page.
-This will take you to Github's ['Generate Repository'](https://github.com/lefticus/cpp_starter_project/generate) page. 
-Fill in a repository name and short description, and click 'Create repository from template'. 
-This will allow you to create a new repository in your Github account, 
-prepopulated with the contents of this project. 
-Now you can clone the project locally and get to work!
-
-    $ git clone https://github.com/<user>/<your_new_repo>.git
-
-### Remove frameworks you're not going to use
-If you know you're not going to use one or more of the optional gui/graphics 
-frameworks (fltk, gtkmm, imgui, etc.), you can remove them with `git rm`:
-
-    $ git rm -r src/<unnecessary_framework>
 
 ## Dependencies
 
@@ -78,7 +72,7 @@ The following compilers should work:
 			.\install.bat
 
 	- MacOS:
- 		
+		
 			brew install llvm
 	</details>
 
@@ -88,24 +82,24 @@ The following compilers should work:
 
 	On Windows, you need to install Visual Studio 2019 because of the SDK and libraries that ship with it.
 
-  	Visual Studio IDE - 2019 Community (installs Clang too):
+	Visual Studio IDE - 2019 Community (installs Clang too):
 		
-  	  	choco install -y visualstudio2019community --package-parameters "add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --includeOptional --passive --locale en-US"
+		choco install -y visualstudio2019community --package-parameters "add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended --includeOptional --passive --locale en-US"
 		
 	Put MSVC compiler, Clang compiler, and vcvarsall.bat on the path:
 
-			choco install vswhere -y
-			refreshenv
+		choco install vswhere -y
+		refreshenv
 			
-			$clpath = vswhere -latest -prerelease -find **/Hostx64/x64/*   # for x64
-			[Environment]::SetEnvironmentVariable("Path", $env:Path + ";$clpath", "User")
+		$clpath = vswhere -latest -prerelease -find **/Hostx64/x64/*   # for x64
+		[Environment]::SetEnvironmentVariable("Path", $env:Path + ";$clpath", "User")
 			
-			$clangpath = vswhere -latest -prerelease -find **/Llvm/bin/*
-			[Environment]::SetEnvironmentVariable("Path", $env:Path + ";$clangpath", "User")
+		$clangpath = vswhere -latest -prerelease -find **/Llvm/bin/*
+		[Environment]::SetEnvironmentVariable("Path", $env:Path + ";$clangpath", "User")
 
-			$vcvarsallpath =  vswhere -latest -prerelease -find **/Auxiliary/Build/*
-			[Environment]::SetEnvironmentVariable("Path", $env:Path + ";$vcvarsallpath", "User")
-			refreshenv
+		$vcvarsallpath =  vswhere -latest -prerelease -find **/Auxiliary/Build/*
+		[Environment]::SetEnvironmentVariable("Path", $env:Path + ";$vcvarsallpath", "User")
+		refreshenv
 
 	</details>
 
@@ -123,7 +117,7 @@ The following compilers should work:
 			choco install conan -y
 	
 	- MacOS:
-	 	
+		
 			brew install conan
 	
 	</details>
@@ -141,7 +135,7 @@ The following compilers should work:
 			choco install cmake -y
 	
 	- MacOS:
-	 		
+			
 			brew install cmake
 	
 	</details>
@@ -163,9 +157,9 @@ The following compilers should work:
 			choco install graphviz -y
 
 	- MacOS:
- 		
+		
 			brew install doxygen
-	 		brew install graphviz
+			brew install graphviz
 
 	</details>
 
@@ -183,7 +177,7 @@ The following compilers should work:
 			choco install ccache -y
 
 	- MacOS:
- 		
+		
 			brew install ccache
 
 	</details>
@@ -202,7 +196,7 @@ The following compilers should work:
 			choco install cppcheck -y
 
 	- MacOS:
- 		
+		
 			brew install cppcheck
 
 	</details>
@@ -215,30 +209,6 @@ The following compilers should work:
 	Follow instructions here:
 	https://github.com/include-what-you-use/include-what-you-use#how-to-install
 	</details>
-
-#### GUI libraries
-This project can be made to work with several optional GUI frameworks.
-
-If desired, you should install the following optional dependencies as
-directed by their documentation, linked here:
- 
-- [FLTK](https://www.fltk.org/doc-1.4/index.html)
-- [GTKMM](https://www.gtkmm.org/en/documentation.html)
-- [QT](https://doc.qt.io/)
-
-The following dependencies can be downloaded automatically by CMake and Conan. 
-All you need to do to install them is to turn on a CMake flag during 
-configuration.
-If you run into difficulty using them, please refer to their documentation,
-linked here:
-
-- [NANA](http://nanapro.org/en-us/documentation/)
-- [SDL](http://wiki.libsdl.org/FrontPage)
-- [IMGUI](https://github.com/ocornut/imgui/tree/master/docs): 
-  This framework depends on SFML, and if you are using Linux, you may need
-  to install several of SFML's dependencies using your package manager. See 
-  [the SFML build tutorial](https://www.sfml-dev.org/tutorials/2.5/compile-with-cmake.php)
-  for specifics.
 
 ## Build Instructions
 
@@ -390,7 +360,7 @@ Choose "Visual Studio 16 2019" as the generator. To tell Visual studio to use `c
 #### **Configure via ccmake**:
 with the Cmake Curses Dialog Command Line tool:  
 
-    ccmake -S . -B ./build
+	ccmake -S . -B ./build
 
 Once `ccmake` has finished setting up, press 'c' to configure the project, 
 press 'g' to generate, and 'q' to quit.
@@ -399,11 +369,11 @@ press 'g' to generate, and 'q' to quit.
 Once you have selected all the options you would like to use, you can build the 
 project (all targets):
 
-    cmake --build ./build
+	cmake --build ./build
 
 For Visual Studio, give the build configuration (Release, RelWithDeb, Debug, etc) like the following:
 
-    cmake --build ./build -- /p:configuration=Release
+	cmake --build ./build -- /p:configuration=Release
 
 ## Troubleshooting
 
@@ -413,7 +383,7 @@ having any trouble with this project, you should start by doing that.
 
 To update conan: 
 
-    $ pip install --user --upgrade conan 
+	$ pip install --user --upgrade conan 
 
 You may need to use `pip3` instead of `pip` in this command, depending on your 
 platform.
@@ -422,8 +392,8 @@ platform.
 If you continue to have trouble with your Conan dependencies, you can try 
 clearing your Conan cache:
 
-    $ conan remove -f '*'
-    
+	$ conan remove -f '*'
+	
 The next time you run `cmake` or `cmake --build`, your Conan dependencies will
 be rebuilt. If you aren't using your system's default compiler, don't forget to 
 set the CC, CXX, CMAKE_C_COMPILER, and CMAKE_CXX_COMPILER variables, as 
@@ -441,8 +411,8 @@ If your project has a Conan configuration error, you can use `conan info` to
 find it. `conan info` displays information about the dependency graph of your 
 project, with colorized output in some terminals.
 
-    $ cd build
-    $ conan info .
+	$ cd build
+	$ conan info .
 
 In my terminal, the first couple lines of `conan info`'s output show all of the
 project's configuration warnings in a bright yellow font. 
@@ -451,18 +421,14 @@ For example, the package `spdlog/1.5.0` depends on the package `fmt/6.1.2`.
 If you were to modify the file `cmake/Conan.cmake` so that it requires an 
 earlier version of `fmt`, such as `fmt/6.0.0`, and then run:
 
-    $ conan remove -f '*'       # clear Conan cache
-    $ rm -rf build              # clear previous CMake build
-    $ mkdir build && cd build
-    $ cmake ..                  # rebuild Conan dependencies
-    $ conan info .
+	$ conan remove -f '*'       # clear Conan cache
+	$ rm -rf build              # clear previous CMake build
+	$ mkdir build && cd build
+	$ cmake ..                  # rebuild Conan dependencies
+	$ conan info .
 
 ...the first line of output would be a warning that `spdlog` needs a more recent
 version of `fmt`.
 
 ## Testing
 See [Catch2 tutorial](https://github.com/catchorg/Catch2/blob/master/docs/tutorial.md)
-
-## Fuzz testing
-
-See [libFuzzer Tutorial](https://github.com/google/fuzzing/blob/master/tutorial/libFuzzerTutorial.md)
