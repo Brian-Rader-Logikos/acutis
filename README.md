@@ -2,9 +2,18 @@
 
 [![Build Status](https://travis-ci.org/lefticus/cpp_starter_project.svg?branch=master)](https://travis-ci.org/lefticus/cpp_starter_project)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/ro4lbfoa7n0sy74c/branch/master?svg=true)](https://ci.appveyor.com/project/lefticus/cpp-starter-project/branch/master)
+Master Branch Status:
+[![Build status](https://ci.appveyor.com/api/projects/status/6cy26jcdw4fbohar?svg=true)](https://ci.appveyor.com/project/Brian-Rader-Logikos/acutis)
 
-![CMake](https://github.com/lefticus/cpp_starter_project/workflows/CMake/badge.svg)
+
+
+
+| Tool		| Master Status  |
+| --------- | :------: |
+| Travis-CI | [![Build Status](https://travis-ci.org/Brian-Rader-Logikos/acutis.svg?branch=master)](https://travis-ci.org/Brian-Rader-Logikos/acutis) |
+| AppVeyor  | [![Build status](https://ci.appveyor.com/api/projects/status/6cy26jcdw4fbohar?svg=true)](https://ci.appveyor.com/project/Brian-Rader-Logikos/acutis) |
+| CMake     | ![CMake](https://github.com/Brian-Rader-Logikos/acutis/workflows/CMake/badge.svg?branch=master) |
+| CodeCov   | [![codecov](https://codecov.io/gh/Brian-Rader-Logikos/acutis/branch/master/graph/badge.svg)](https://codecov.io/gh/Brian-Rader-Logikos/acutis) |
 
 # Acutis Server
 
@@ -423,7 +432,3 @@ version of `fmt`.
 
 ## Testing
 See [Catch2 tutorial](https://github.com/catchorg/Catch2/blob/master/docs/tutorial.md)
-
-## Fuzz testing
-
-See [libFuzzer Tutorial](https://github.com/google/fuzzing/blob/master/tutorial/libFuzzerTutorial.md)
