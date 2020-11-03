@@ -30,7 +30,7 @@ int main(int argc, const char **argv)
 		fmt::format("Acutis System Test Server {}.{}.{}-{}", version::major, version::minor, version::patch,
 			version::git_commit_hash));
 
-	int port = args["--port"].asLong();
+	long port = args["--port"].asLong();
 	std::string address = args["--address"].asString();
 	spdlog::info("Server running on {}:{}", address, port);
 }
