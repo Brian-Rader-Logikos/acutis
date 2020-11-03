@@ -13,6 +13,10 @@ build/
 venv/
 .venv/
 
+# PyCharm Folders
+__pycache__
+.pytest_cache
+
 # Prerequisites
 *.d
 

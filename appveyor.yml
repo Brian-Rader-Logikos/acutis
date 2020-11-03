@@ -20,5 +20,5 @@ build_script:
     cmake --build . --config "Release"
 
 test_script:
-- cmd: ctest -C Debug
+- cmd: ctest -C Debug --output-on-failure
 
