@@ -7,9 +7,8 @@ environment:
 
 build_script:
 - cmd: >-
-    set PATH=C:\\Python38-x64;C:\Users\appveyor\AppData\Roaming\Python\Python38\Scripts;%PATH%
-
-    "%PYTHON%" -m pip install --user -r requirements.txt
+    python.exe --version
+    python.exe -m pip install --user -r requirements.txt
 
     mkdir build
 
