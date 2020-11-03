@@ -9,6 +9,10 @@ build/
 # JetBrains Folders
 .idea/
 
+# Virtual Environment Folders
+venv/
+.venv/
+
 # Prerequisites
 *.d
 
