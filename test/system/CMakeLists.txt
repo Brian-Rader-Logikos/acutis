@@ -1,10 +1,10 @@
 add_subdirectory(test_server)
 
-find_package(Python COMPONENTS Interpreter)
+find_package(Python3 COMPONENTS Interpreter)
 
 add_test(
     NAME system_tests
-    COMMAND Python::Interpreter -m pytest ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMAND Python3::Interpreter -m pytest ${CMAKE_CURRENT_SOURCE_DIR}
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} COMMAND_EXPAND_LISTS)
 
 # Change to this when implementing real system tests. add_test(NAME system_tests COMMAND pytest
