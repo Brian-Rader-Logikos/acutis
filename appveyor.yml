@@ -8,7 +8,7 @@ environment:
 build_script:
 - cmd: >-
     set PATH=%PATH%;C:\Users\appveyor\AppData\Roaming\Python\Python38\Scripts
-    "%PYTHON%" -m pip install --user virtualenv
+
     "%PYTHON%" -m pip install --user -r requirements.txt
 
     mkdir build
@@ -16,6 +16,7 @@ build_script:
     cd build
 
     echo %PATH%
+
     cmake c:\projects\source -G "Visual Studio 16 2019" -DCMAKE_BUILD_TYPE:STRING=Release --log-level=TRACE
 
     cmake --build . --config "Release"
