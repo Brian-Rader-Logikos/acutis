@@ -20,6 +20,9 @@ __pycache__
 # Prerequisites
 *.d
 
+# Other folders
+TestResults/
+
 # Compiled Object files
 *.slo
 *.lo
