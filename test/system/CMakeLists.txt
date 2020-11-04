@@ -1,5 +1,7 @@
 add_subdirectory(test_server)
 
+message("CMAKE_MODULE_PATH: ${CMAKE_MODULE_PATH}")
+
 find_package(Python3 COMPONENTS Interpreter)
 
 add_test(

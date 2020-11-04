@@ -3,18 +3,20 @@ image:
 clone_folder: c:\projects\source
 
 environment:
-    PYTHON: "python.exe"
+    PYTHON: "C:\\Python38-x64\\python.exe"
 
 build_script:
 - cmd: >-
-    python.exe --version
-    python.exe -m pip install --user -r requirements.txt
+    set PATH=%PATH%;C:\Users\appveyor\AppData\Roaming\Python\Python38\Scripts
+    "%PYTHON%" -m pip install --user virtualenv
+    "%PYTHON%" -m pip install --user -r requirements.txt
 
     mkdir build
 
     cd build
 
-    cmake c:\projects\source -G "Visual Studio 16 2019" -DCMAKE_BUILD_TYPE:STRING=Release
+    echo %PATH%
+    cmake c:\projects\source -G "Visual Studio 16 2019" -DCMAKE_BUILD_TYPE:STRING=Release --log-level=TRACE
 
     cmake --build . --config "Release"
 
