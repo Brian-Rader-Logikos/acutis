@@ -15,9 +15,7 @@ build_script:
 
     cd build
 
-    echo %PATH%
-
-    cmake c:\projects\source -G "Visual Studio 16 2019" -DCMAKE_BUILD_TYPE:STRING=Release --log-level=TRACE
+    cmake c:\projects\source -G "Visual Studio 16 2019" -DCMAKE_BUILD_TYPE:STRING=Release
 
     cmake --build . --config "Release"
 
