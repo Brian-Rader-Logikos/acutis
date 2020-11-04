@@ -25,8 +25,9 @@ jobs:
     - name: Install conan
       shell: bash
       run: |
+        python3 --version
         python3 -m pip install --upgrade pip setuptools
-        python3 -m pip install conan
+        python3 -m pip install -r requirements.txt
         source ~/.profile
 
     - name: Configure CMake
@@ -54,4 +55,4 @@ jobs:
       shell: bash
       # Execute tests defined by the CMake configuration.  
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest -C $BUILD_TYPE
+      run: ctest -C $BUILD_TYPE --output-on-failure

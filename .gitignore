@@ -6,6 +6,17 @@
 out/
 build/
 
+# JetBrains Folders
+.idea/
+
+# Virtual Environment Folders
+venv/
+.venv/
+
+# PyCharm Folders
+__pycache__
+.pytest_cache
+
 # Prerequisites
 *.d
 

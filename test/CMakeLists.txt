@@ -5,10 +5,6 @@ else()
     include(${CONAN_CATCH2_ROOT}/lib/cmake/Catch2/Catch.cmake)
 endif()
 
-add_library(catch_main STATIC catch_main.cpp)
-target_link_libraries(catch_main PUBLIC CONAN_PKG::catch2)
-target_link_libraries(catch_main PRIVATE project_options)
-
 add_executable(tests tests.cpp)
 target_link_libraries(tests PRIVATE project_warnings project_options catch_main)
 
@@ -50,3 +46,7 @@ catch_discover_tests(
     -s
     --reporter=xml
     --out=relaxed_constexpr.xml)
+
+add_subdirectory(catch_main)
+add_subdirectory(integrated)
+add_subdirectory(system)
