@@ -15,7 +15,6 @@ public:
 	Socket_server();
 	~Socket_server();
 	void listen(Address address, int port);
-	void shutdown();
 
 private:
 	std::unique_ptr<internal::Socket_server_impl> impl_;

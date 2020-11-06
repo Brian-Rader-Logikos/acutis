@@ -3,15 +3,19 @@
 #include "win_socket_api.h"
 
 namespace acutis::net::windows {
-namespace {
-	internal::Win_socket_api s_wsa_api{};
+
+Socket_server_win::~Socket_server_win() {
+	internal::wsa_cleanup();
 }
 
 void Socket_server_win::listen(Address /*address*/, int /*port*/)
 {
-	internal::Win_socket_api::initialize();
+	internal::wsa_initialize();
 }
 
-void Socket_server_win::cleanup() { internal::Win_socket_api::cleanup(); }
+void Socket_server_win::cleanup()
+{
+	internal::wsa_cleanup();
+}
 
 }// namespace acutis::net::windows

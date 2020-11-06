@@ -4,50 +4,56 @@
 #include <mutex>
 #include <spdlog/spdlog.h>
 #include <stdexcept>
+#include <string_view>
 #include <winsock2.h>
 
 namespace acutis::net::windows::internal {
 namespace {
-	constexpr WORD low_byte_mask = 0xff;
-	constexpr uint8_t high_byte_shift = 8;
-
 	constexpr BYTE wsa_major = 2;
 	constexpr BYTE wsa_minor = 0;
 	constexpr WORD wsa_req_version = MAKEWORD(wsa_major, wsa_minor);
 
-	std::once_flag init_flag;
+	std::once_flag wsa_init_flag;
+	std::once_flag wsa_cleanup_flag;
+
+	int wsa_log_last_error(std::string_view msg)
+	{
+		const int error = WSAGetLastError();
+		const std::string error_msg = error_message(error);
+		spdlog::get("acutis")->error("{} {}: {}", msg, error, error_msg);
+		return error;
+	}
+
 }// namespace
 
 
-void Win_socket_api::initialize()
+void wsa_initialize()
 {
-	std::call_once(init_flag, do_initialize);
+	std::call_once(wsa_init_flag, []() {
+		WSADATA wsa_data;
+		int result = WSAStartup(wsa_req_version, &wsa_data);
+		if (result != 0) {
+			wsa_log_last_error("WSA Cleanup error");
+			throw std::runtime_error(
+				fmt::format("Failure to initialize Windows Sockets v{}.{}", wsa_major, wsa_minor));
+		}
+
+		spdlog::get("acutis")->info(
+			"Initialized WSA v{}.{}", HIBYTE(wsa_data.wHighVersion), LOBYTE(wsa_data.wHighVersion));
+	});
 }
 
-void Win_socket_api::do_initialize()
+void wsa_cleanup()
 {
-	WSADATA wsa_data;
-	int result = WSAStartup(wsa_req_version, &wsa_data);
-	if (result != 0) {
-		throw std::runtime_error(
-			fmt::format("Failure to initialize Windows Sockets v {}.{}", wsa_major, wsa_minor));
-	}
-
-	auto high = (wsa_data.wVersion >> high_byte_shift) & low_byte_mask;
-	auto low = wsa_data.wVersion & low_byte_mask;
-	spdlog::get("acutis")->info("Initialized WSA v{0}.{1}", high, low);
+	std::call_once(wsa_cleanup_flag, []() {
+		int result = WSACleanup();
+		if (result == 0) {
+			spdlog::get("acutis")->info("WSA Cleanup successful");
+		} else {
+			wsa_log_last_error("WSA Cleanup error");
+		}
+	});
 }
 
-void Win_socket_api::cleanup()
-{
-	int result = WSACleanup();
-	if (result == 0) {
-		spdlog::get("acutis")->info("WSA Cleanup successful");
-	} else {
-		const int error = WSAGetLastError();
-		const std::string error_msg = error_message(error);
-		spdlog::get("acutis")->error("WSA Cleanup error {}: {}", error, error_msg);
-	}
-}
 
 }// namespace acutis::net::windows::internal

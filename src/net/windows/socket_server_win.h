@@ -9,6 +9,7 @@ namespace acutis::net::windows {
 class Socket_server_win : public acutis::net::internal::Socket_server_impl {
 public:
 	Socket_server_win() = default;
+	~Socket_server_win() override;
 	void listen(Address address, int port) override;
 	void cleanup() override;
 };

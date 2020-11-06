@@ -20,6 +20,4 @@ void Socket_server::listen(Address address, int port)
 	impl_->listen(address, port);
 }
 
-void Socket_server::shutdown() {}
-
 }// namespace acutis::net
