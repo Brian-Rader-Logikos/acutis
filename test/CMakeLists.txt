@@ -17,7 +17,7 @@ catch_discover_tests(
     EXTRA_ARGS
     -s
     --reporter=xml
-    --out=tests.xml)
+    --out=tests.result.xml)
 
 # Add a file containing a set of constexpr tests
 add_executable(constexpr_tests constexpr_tests.cpp)
@@ -30,7 +30,7 @@ catch_discover_tests(
     EXTRA_ARGS
     -s
     --reporter=xml
-    --out=constexpr.xml)
+    --out=constexpr.result.xml)
 
 # Disable the constexpr portion of the test, and build again this allows us to have an executable that we can debug when
 # things go wrong with the constexpr testing
@@ -45,7 +45,7 @@ catch_discover_tests(
     EXTRA_ARGS
     -s
     --reporter=xml
-    --out=relaxed_constexpr.xml)
+    --out=relaxed_constexpr.result.xml)
 
 add_subdirectory(catch_main)
 add_subdirectory(integrated)
