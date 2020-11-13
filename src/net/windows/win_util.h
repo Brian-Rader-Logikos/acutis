@@ -5,7 +5,7 @@
 
 namespace acutis::net::windows {
 
-std::string error_message(int error);
+int wsa_log_last_error(std::string_view msg);
 
 }
 #endif// !ACUTIS_WIN_UTIL_H

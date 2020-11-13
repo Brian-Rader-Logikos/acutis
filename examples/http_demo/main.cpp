@@ -20,17 +20,28 @@ Options:
   --port=<port>        TCP Port to use for HTTP server. [default: 80].
 )";
 
-int main(int argc, const char **argv)
+std::map<std::string, docopt::value> parse_args(int argc, const char** argv)
 {
 	using namespace acutis;
 
-	std::map<std::string, docopt::value> args = docopt::docopt(USAGE,
-		{ std::next(argv), std::next(argv, argc) },
-		true,// show help if requested
-		fmt::format("Acutis Demo {}.{}.{}-{}", version::major, version::minor, version::patch,
-			version::git_commit_hash));
+	const std::string server_version =
+		fmt::format("Acutis Demo {}.{}.{}", version::major, version::minor, version::patch);
 
-	int port = args["--port"].asLong();
-	std::string address = args["--address"].asString();
-	spdlog::info("Server running on {}:{}", address, port);
+	return docopt::docopt(USAGE, { std::next(argv), std::next(argv, argc) }, true, server_version);
+}
+
+int main(int argc, const char** argv)
+{
+	using namespace acutis;
+
+	try {
+		std::map<std::string, docopt::value> args = parse_args(argc, argv);
+
+		int port = args["--port"].asLong();
+		std::string address = args["--address"].asString();
+		spdlog::info("Server running on {}:{}", address, port);
+	}
+	catch (const std::exception& ex) {
+		SPDLOG_CRITICAL("Critical failure occurred: {}", ex.what());
+	}
 }

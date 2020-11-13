@@ -6,10 +6,12 @@
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <vector>
+#include <filesystem>
 
 #include "project_version.h"
 
 #include "net/socket_server.h"
+#include "net/address.h"
 
 static constexpr auto USAGE =
 	R"(Acutis System Test Server.
@@ -29,24 +31,30 @@ Options:
 void configure_logging()
 {
 	try {
-		auto console = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-		console->set_level(spdlog::level::info);
+		auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+		console_sink->set_level(spdlog::level::info);
 
-		auto file = std::make_shared<spdlog::sinks::basic_file_sink_mt>("acutis.log", true);
-		file->set_level(spdlog::level::trace);
+		auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>("acutis.log", true);
+		file_sink->set_level(spdlog::level::trace);
 
-		std::vector<spdlog::sink_ptr> sinks{ console, file };
+		spdlog::sinks_init_list sink_list = { console_sink, file_sink };
 
-		spdlog::init_thread_pool(8192, 1);
-		auto logger = std::make_shared<spdlog::async_logger>("acutis", sinks.begin(), sinks.end(),
-			spdlog::thread_pool(), spdlog::async_overflow_policy::block);
-		logger->set_level(spdlog::level::debug);
-		logger->debug("Logger configured");
-		spdlog::register_logger(logger);
+		auto logger = std::make_shared<spdlog::logger>("acutis", begin(sink_list), end(sink_list));
+		logger->set_level(spdlog::level::trace);
+		spdlog::set_default_logger(logger);
 	}
 	catch (const spdlog::spdlog_ex& ex) {
 		std::cerr << "Log configuration failed: " << ex.what() << "\n";
 	}
+}
+
+std::map<std::string, docopt::value> parse_args(int argc, const char** argv) {
+	using namespace acutis;
+
+	const std::string server_version = fmt::format(
+		"Acutis System Test Server v{}.{}.{}", version::major, version::minor, version::patch);
+
+	return docopt::docopt(USAGE, { std::next(argv), std::next(argv, argc) }, true, server_version);
 }
 
 int main(int argc, const char** argv)
@@ -55,21 +63,23 @@ int main(int argc, const char** argv)
 
 	configure_logging();
 
-	const std::string server_version = fmt::format(
-		"Acutis System Test Server v{}.{}.{}", version::major, version::minor, version::patch);
+	try {
+		SPDLOG_INFO("Git Commit Hash: {}", version::git_commit_hash);
+		SPDLOG_INFO("Current Path: {}", std::filesystem::current_path().string());
 
-	spdlog::get("acutis")->debug(server_version);
-	spdlog::get("acutis")->debug("Git Commit Hash: {}", version::git_commit_hash);
+		std::map<std::string, docopt::value> args = parse_args(argc, argv);
 
-	std::map<std::string, docopt::value> args =
-		docopt::docopt(USAGE, { std::next(argv), std::next(argv, argc) }, true, server_version);
+		long port = args["--port"].asLong();
+		std::string address = args["--address"].asString();
 
-	long port = args["--port"].asLong();
-	std::string address = args["--address"].asString();
+		acutis::net::Socket_server server;
+		server.initialize();
 
-	spdlog::get("acutis")->info("Binding server on {}:{}", address, port);
-
-	acutis::net::Socket_server server;
-	acutis::net::Address bindAddress{ address };
-	server.listen(bindAddress, port);
+		acutis::net::Address bindAddress = net::address_from_string(address);
+		server.listen(bindAddress, static_cast<uint16_t>(port));
+	}
+	catch (const std::exception& ex) {
+		SPDLOG_CRITICAL("Critical failure occurred: {}", ex.what());
+		return -1;
+	}
 }

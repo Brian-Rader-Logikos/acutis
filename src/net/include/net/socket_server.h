@@ -13,8 +13,16 @@ namespace internal {
 class Socket_server {
 public:
 	Socket_server();
-	~Socket_server();
-	void listen(Address address, int port);
+	~Socket_server() noexcept;
+
+	Socket_server(const Socket_server&) = delete;
+	Socket_server(Socket_server&& other) noexcept;
+
+	Socket_server& operator=(const Socket_server&) = delete;
+	Socket_server& operator=(Socket_server&& other) noexcept;
+
+	void initialize();
+	void listen(Address address, uint16_t port);
 
 private:
 	std::unique_ptr<internal::Socket_server_impl> impl_;

@@ -3,8 +3,9 @@ add_library(
     socket_server.cpp
     address.cpp
     windows/socket_server_win.cpp
-    windows/win_socket_api.cpp
-    windows/win_util.cpp)
+    windows/win_util.cpp
+    windows/win_socket.cpp
+    windows/win_server_socket.cpp)
 
 target_include_directories(
     acutis_net
@@ -19,3 +20,7 @@ target_link_libraries(
             project_version
             CONAN_PKG::fmt
             CONAN_PKG::spdlog)
+
+if(${ENABLE_TESTING})
+    add_subdirectory(test)
+endif()
