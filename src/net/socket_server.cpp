@@ -3,7 +3,7 @@
 
 #if defined(_WIN32)
 #include "windows/socket_server_win.h"
-#elif defined(__unix)
+#elif defined(__unix) || defined(__APPLE__)
 #include "posix/socket_server_posix.h"
 #endif
 
