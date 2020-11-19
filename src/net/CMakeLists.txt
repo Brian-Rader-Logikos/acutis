@@ -26,7 +26,7 @@ target_include_directories(
 
 target_link_libraries(
     acutis_net
-    PRIVATE $<$<PLATFORM_ID:WIN32>:ws2_32>
+    PUBLIC $<$<PLATFORM_ID:WIN32>:ws2_32>
             project_options
             project_warnings
             project_version

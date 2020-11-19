@@ -15,7 +15,7 @@ namespace {
 	{
 #if defined(_WIN32)
 		return std::make_unique<windows::Socket_server_win>();
-#elif defined(__unix)
+#elif defined(__unix) || defined(__APPLE__)
 		return std::make_unique<Socket_server_posix>();
 #endif
 	}
