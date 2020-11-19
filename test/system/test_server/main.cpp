@@ -7,6 +7,8 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <vector>
 #include <filesystem>
+#include <thread>
+#include <string>
 
 #include "project_version.h"
 
@@ -71,12 +73,25 @@ int main(int argc, const char** argv)
 
 		long port = args["--port"].asLong();
 		std::string address = args["--address"].asString();
-
-		acutis::net::Socket_server server;
-		server.initialize();
-
 		acutis::net::Address bindAddress = net::address_from_string(address);
-		server.listen(bindAddress, static_cast<uint16_t>(port));
+
+        std::thread server_thread{[bindAddress, port]()
+        {
+            acutis::net::Socket_server server;
+            server.initialize();
+            
+            server.listen(bindAddress, static_cast<uint16_t>(port));
+        }};
+
+        std::string cmd;
+        using namespace std::string_literals;
+        do
+        {
+            std::cin >> cmd;
+        } while (cmd != "quit"s);
+		SPDLOG_INFO("Quit received");
+
+        server_thread.join();
 	}
 	catch (const std::exception& ex) {
 		SPDLOG_CRITICAL("Critical failure occurred: {}", ex.what());

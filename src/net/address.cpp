@@ -21,7 +21,7 @@ Address::Address(std::array<uint8_t, 4> bytes) : bytes_(bytes) {}
 
 uint32_t Address::to_ulong()
 {
-	return std::accumulate(cbegin(bytes_), cend(bytes_), 0UL,
+	return std::accumulate(cbegin(bytes_), cend(bytes_), static_cast<uint32_t>(0),
 		[](uint32_t addr, uint8_t byte) { return (addr << bits_per_byte) | byte; });
 }
 

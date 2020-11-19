@@ -1,12 +1,27 @@
 #include "net/socket_server.h"
 #include "socket_server_impl.h"
 
+#if defined(_WIN32)
 #include "windows/socket_server_win.h"
+#elif defined(__unix)
+#include "posix/socket_server_posix.h"
+#endif
+
 #include <spdlog/spdlog.h>
 
 namespace acutis::net {
+namespace {
+	auto create_socket_server()
+	{
+#if defined(_WIN32)
+		return std::make_unique<windows::Socket_server_win>();
+#elif defined(__unix)
+		return std::make_unique<Socket_server_posix>();
+#endif
+	}
+}// namespace
 
-Socket_server::Socket_server() : impl_(std::make_unique<windows::Socket_server_win>())
+Socket_server::Socket_server() : impl_(create_socket_server())
 {
 	SPDLOG_TRACE("Constructed Socket_server");
 }

@@ -1,8 +1,9 @@
 import pytest
-from subprocess import Popen
+from subprocess import Popen, PIPE
 from http.client import HTTPConnection
 import os
 import logging
+import time
 
 def pytest_addoption(parser):
     parser.addoption("--server_path", action="store")
@@ -16,12 +17,12 @@ def server(request):
     with Popen([server_path,
             "start",
             "--address", "0.0.0.0",
-            "--port", request.config.getoption("--port")]) as process:
-        logging.getLogger().error("Running server on %s", server_path)
+            "--port", request.config.getoption("--port")], stdin=PIPE, stdout=PIPE, text=True) as process:
+        logging.getLogger().info("Running server on %s", server_path)
+        time.sleep(1)
         yield process
-        logging.getLogger().error("Terminating server on %s", server_path)
-        process.terminate()
-        process.wait(10)
+        stdout_data, stderr_data = process.communicate("quit\n", timeout=10.0)
+        assert "Quit received" in stdout_data
 
 @pytest.fixture(scope="function")
 def connection(request):
@@ -31,7 +32,7 @@ def connection(request):
 
 @pytest.fixture(scope="function")
 def manual_connection(connection):
-    logging.getLogger().error("Getting Manual Connection")
+    logging.getLogger().info("Getting Manual Connection")
     connection.auto_open = 0 # Do not automatically open connection on request
     yield connection
 
