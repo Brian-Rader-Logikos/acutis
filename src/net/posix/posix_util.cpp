@@ -12,7 +12,7 @@ namespace {
 	{
         char buffer[256];
         // std::array<char, 256> buffer;
-        strerror_r(error, &buffer[0], 256);
+        [[maybe_unused]] auto r = strerror_r(error, &buffer[0], 256);
 		return std::string(&buffer[0]);
 	}
 }// namespace

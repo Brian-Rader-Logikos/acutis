@@ -10,7 +10,7 @@ target_sources(acutis_net
         windows/win_util.cpp
         windows/win_socket.cpp
         windows/win_server_socket.cpp)
-elseif(UNIX)
+elseif(UNIX OR APPLE)
 target_sources(acutis_net
     PRIVATE
         posix/socket_server_posix.cpp
