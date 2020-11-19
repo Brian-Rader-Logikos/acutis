@@ -83,18 +83,11 @@ int main(int argc, const char** argv)
             server.listen(bindAddress, static_cast<uint16_t>(port));
         }};
 
-        std::string cmd;
-        using namespace std::string_literals;
-        do
-        {
-            std::cin >> cmd;
-        } while (cmd != "quit"s);
-		SPDLOG_INFO("Quit received");
-
         server_thread.join();
 	}
 	catch (const std::exception& ex) {
 		SPDLOG_CRITICAL("Critical failure occurred: {}", ex.what());
 		return -1;
 	}
+    SPDLOG_INFO("Exiting system_test_server");
 }

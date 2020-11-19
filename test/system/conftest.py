@@ -21,8 +21,8 @@ def server(request):
         logging.getLogger().info("Running server on %s", server_path)
         time.sleep(1)
         yield process
-        stdout_data, stderr_data = process.communicate("quit\n", timeout=10.0)
-        assert "Quit received" in stdout_data
+        stdout_data, stderr_data = process.communicate(timeout=10.0)
+        assert "Exiting system_test_server" in stdout_data
 
 @pytest.fixture(scope="function")
 def connection(request):
