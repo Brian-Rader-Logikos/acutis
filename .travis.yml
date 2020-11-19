@@ -15,7 +15,7 @@ jobs:
       compiler: gcc
       osx_image: xcode12.2 # includes gcc-9 by default
       env:
-        - GCC_VER="9"
+        - GCC_VER="10"
         - MATRIX_EVAL="CC=gcc-${GCC_VER} && CXX=g++-${GCC_VER}"
     - os: osx
       compiler: clang
