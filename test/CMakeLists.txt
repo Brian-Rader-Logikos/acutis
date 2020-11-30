@@ -47,6 +47,7 @@ catch_discover_tests(
     --reporter=xml
     --out=relaxed_constexpr.result.xml)
 
+add_subdirectory(test_doubles)
 add_subdirectory(catch_main)
 add_subdirectory(integrated)
 add_subdirectory(system)
