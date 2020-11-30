@@ -27,7 +27,7 @@ constexpr bool is_not_space(char c)
 
 constexpr uint16_t to_version_digit(char c)
 {
-	return c - '0';
+	return static_cast<uint16_t>(c - '0');
 }
 
 template<typename Iter>
